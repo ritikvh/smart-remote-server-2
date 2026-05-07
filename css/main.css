@@ -1107,6 +1107,7 @@ body {
     border-bottom: #ddd 0.5px solid;
   }
   .project-status {
+    width: 10vw;
     order: 2;
     flex: 1;
     font-size: 12px;
