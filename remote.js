@@ -195,7 +195,7 @@ function goBack() {
 
 // Reset section to root and clear stack
 function resetSection(section) {
-  console.log("Section Menu", section);
+  // console.log("Section Menu", section);
   if (uiState.section === section) {
     render();
   }
@@ -223,35 +223,24 @@ document.addEventListener("click", (e) => {
   // Add active to clicked
   item.classList.add("active");
 
+  const section = item.dataset.section;
+
   // Section change
-  resetSection(item.dataset.section);
+  resetSection(section);
 
-  // Request fresh data
-  if (uiState.section === "overview") {
-    socket.emit("remote_command", {
-      code: remoteState.pairedCode,
-      command: "request_overview",
-      payload: "Overview",
-    });
-  }
-  if (uiState.section === "home_search") {
-    socket.emit("remote_command", {
-      code: remoteState.pairedCode,
-      command: "request_home_theme1",
-    });
-  }
+  const SECTION_COMMANDS = {
+    overview: { command: "request_overview", payload: "Overview" },
+    home_search: { command: "request_home_theme1" },
+    amenities: { command: "request_amenities" },
+    location: { command: "request_location" },
+    technical_specifications: { command: "technical_specifications" },
+  };
 
-  if (uiState.section === "amenities") {
+  const sectionCommand = SECTION_COMMANDS[section];
+  if (sectionCommand) {
     socket.emit("remote_command", {
       code: remoteState.pairedCode,
-      command: "request_amenities",
-    });
-  }
-
-  if (uiState.section === "location") {
-    socket.emit("remote_command", {
-      code: remoteState.pairedCode,
-      command: "request_location",
+      ...sectionCommand,
     });
   }
 });
@@ -409,7 +398,7 @@ socket.on("display_state", ({ state }) => {
   renderMenuItems();
   // Theme1 End
 
-  console.log("display_state", state);
+  // console.log("display_state", state);
   applyJoystickLayout(uiState.data.joystickPosition);
   render();
   updateAutocompleteDropdown();
@@ -477,7 +466,9 @@ function render() {
   if (uiState.section === "overview") {
     content.innerHTML = `
     <div class="section-card">
-      <p class="showing-screen">Showing on Screen</p>
+      <div class="showing-screen-wrapper">
+        <p class="showing-screen">Showing on Screen: ${uiState.data.filteredMenuItems.overview}</p>
+      </div>
     </div>
   `;
   }
@@ -485,6 +476,17 @@ function render() {
     renderHomes({ goBack, getActive, getUnitTypeLabel, setMode, navigate });
   if (uiState.section === "amenities") renderAmenities({ getActive });
   if (uiState.section === "location") renderLocation();
+  if (uiState.section === "technical_specifications") {
+    content.innerHTML = `
+    <div class="section-card">
+      <div class="showing-screen-wrapper">
+        <p class="showing-screen">
+        <span>Showing on Screen: Technical Specifications</span>
+      </p>
+      </div>
+    </div>
+    `;
+  }
 }
 
 // Get the active item id for a given navigation level

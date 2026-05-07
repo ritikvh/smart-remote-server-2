@@ -7,6 +7,7 @@ const MENU_ICONS = {
   home_search: "fa-solid fa-building",
   more_options: "fa-solid fa-circle-plus",
   shortlisted_units: "fa-solid fa-heart",
+  technical_specifications: "fa-solid fa-screwdriver-wrench",
 };
 
 export function renderMenuItems() {
