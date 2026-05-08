@@ -121,7 +121,7 @@ function renderBuildings(container, { getActive, navigate }) {
 }
 
 function renderTakeMeTo(container, { getActive, goBack }) {
-  const rooms = uiState.data.takeMeTo;
+  const rooms = uiState.data.takeMeToTheme1 || uiState.data.takeMeTo;
   const activeRoom = getActive("room");
 
   // Toolbar with back button

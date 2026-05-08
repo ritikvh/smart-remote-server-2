@@ -160,6 +160,7 @@ function goBack() {
   }
 
   uiState.data.takeMeTo = [];
+  uiState.data.takeMeToTheme1 = [];
   uiState.searchQuery = "";
   uiState.typeFilter = "";
 
@@ -381,6 +382,7 @@ socket.on("display_state", ({ state }) => {
     uiState.data.amenities = state.amenities;
   }
   uiState.data.takeMeTo = state?.takeMeTo || [];
+  uiState.data.takeMeToTheme1 = state?.takeMeToTheme1 || [];
   uiState.data.locationData = state?.locationData || [];
   uiState.data.locationPlacesFind = state?.locationPlacesFind || [];
   uiState.data.autocompletePredictions = state?.autocompletePredictions || [];

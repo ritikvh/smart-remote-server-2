@@ -18,6 +18,7 @@ export const uiState = {
   data: {
     homes: { buildings: [], units: [] },
     takeMeTo: [],
+    takeMeToTheme1: [],
     amenities: {},
     amenityThumbnails: [],
     locationData: [],
